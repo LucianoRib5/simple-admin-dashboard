@@ -29,4 +29,14 @@ export class EmployeeController {
       res.status(err.status || 400).send(err.message);
     };
   };
+
+  public deleteEmployee = async (req: Request, res: Response) => {
+    try {
+      const employeeId: string = req.params.id
+      const response = await this.employeeBusiness.deleteEmployee(employeeId);
+      res.send(response);      
+    } catch (err: any) {
+      res.status(err.statusCode).send(err.errorHandler());
+    };
+  };
 }

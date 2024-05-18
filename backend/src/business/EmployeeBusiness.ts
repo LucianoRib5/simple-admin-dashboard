@@ -1,6 +1,7 @@
 import { EmployeeRepository } from '../repository/employeeRepository';
 import { EmployeeDto, EmployeeResponseDto } from '../dtos/createEmployeeDto';
 import { IEmployee } from '../models/employeeModel';
+import { CustomError } from '../errors/CustomError';
 
 export class EmployeeBusiness {
   private employeeRepository = new EmployeeRepository()
@@ -19,5 +20,10 @@ export class EmployeeBusiness {
     }
 
     return newEmployee;
+  };
+
+  public deleteEmployee = async (employeeId: string) => {
+    const response = await this.employeeRepository.deleteEmployee(employeeId);
+    return response;
   };
 }
