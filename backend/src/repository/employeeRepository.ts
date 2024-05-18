@@ -11,6 +11,22 @@ export class EmployeeRepository {
         return newEmployee
     };
 
+    public getEmployeeById = async (employeeId: string): Promise<IEmployee> => {
+        try {
+            const employee = await Employee.findById(employeeId);
+            if (!employee) {
+                throw new CustomError(
+                    `Funcionário com id ${employeeId} não encontrado!`,
+                    'EMPLOYEE_NOT_FOUND',
+                    404
+                );
+            }
+            return employee;
+        } catch (err: any) {
+            throw err
+        }
+    };
+
     public deleteEmployee = async (employeeId: string): Promise<boolean> => {
         try {
             const employee = await Employee.findById(employeeId);

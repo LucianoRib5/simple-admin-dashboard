@@ -22,6 +22,22 @@ export class EmployeeBusiness {
     return newEmployee;
   };
 
+  public getEmployeeById = async (employeeId: string) => {
+    const response = await this.employeeRepository.getEmployeeById(employeeId);
+
+    const { name, position, department, hireDate, _id} = response
+
+    const employee: EmployeeResponseDto = {
+      id: _id as string,
+      name,
+      position,
+      department,
+      hireDate
+    }
+
+    return employee;
+  };
+
   public deleteEmployee = async (employeeId: string) => {
     const response = await this.employeeRepository.deleteEmployee(employeeId);
     return response;

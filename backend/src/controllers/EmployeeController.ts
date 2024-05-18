@@ -30,6 +30,16 @@ export class EmployeeController {
     };
   };
 
+  public getEmployeeById = async (req: Request, res: Response) => {
+    try {
+      const employeeId: string = req.params.id
+      const employee = await this.employeeBusiness.getEmployeeById(employeeId);
+      res.send(employee);      
+    } catch (err: any) {
+      res.status(err.statusCode).send(err.errorHandler());
+    };
+  };
+
   public deleteEmployee = async (req: Request, res: Response) => {
     try {
       const employeeId: string = req.params.id
