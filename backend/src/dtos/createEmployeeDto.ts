@@ -1,7 +1,7 @@
 import { IsNotEmpty, IsString, IsDate } from 'class-validator';
 import { Transform } from 'class-transformer';
 
-export class CreateEmployeeDto {
+export class EmployeeDto {
   @IsNotEmpty()
   @IsString()
   name?: string;
@@ -17,4 +17,8 @@ export class CreateEmployeeDto {
   @IsNotEmpty()
   @IsDate()
   hireDate?: Date;
+}
+
+export class EmployeeResponseDto extends EmployeeDto {
+  id?: string
 }

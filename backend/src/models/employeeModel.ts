@@ -1,6 +1,6 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose, { Schema, Document } from 'mongoose';
 
-export interface IEmployee {
+export interface IEmployee extends Document{
   name: string;
   position: string;
   department: string;
