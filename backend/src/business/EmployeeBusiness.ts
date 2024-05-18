@@ -38,6 +38,25 @@ export class EmployeeBusiness {
     return employee;
   };
 
+  public getAllEmployees = async () => {
+    const response = await this.employeeRepository.getAllEmployees();
+
+    const employees = response.map(employee => {
+      const employeeDto: EmployeeResponseDto = {
+        id: employee._id as string,
+        name: employee.name,
+        position: employee.position,
+        department: employee.department,
+        hireDate: employee.hireDate
+      }
+
+      return employeeDto
+    })
+
+
+    return employees;
+  };
+
   public deleteEmployee = async (employeeId: string) => {
     const response = await this.employeeRepository.deleteEmployee(employeeId);
     return response;

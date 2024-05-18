@@ -4,19 +4,19 @@ import { Transform } from 'class-transformer';
 export class EmployeeDto {
   @IsNotEmpty()
   @IsString()
-  name?: string;
+  name!: string;
 
   @IsNotEmpty()
   @IsString()
-  position?: string;
+  position!: string;
 
   @IsNotEmpty()
   @IsString()
-  department?: string;
+  department!: string;
 
   @IsNotEmpty()
   @IsDate()
-  hireDate?: Date;
+  hireDate!: Date;
 }
 
 export class EmployeeResponseDto extends EmployeeDto {

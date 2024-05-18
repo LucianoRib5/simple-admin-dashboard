@@ -27,6 +27,22 @@ export class EmployeeRepository {
         }
     };
 
+    public getAllEmployees = async (): Promise<IEmployee[]> => {
+        try {
+            const employees = await Employee.find();
+            if (!employees || employees.length === 0) {
+                throw new CustomError(
+                    `Nenhum funcionário encontrado!`,
+                    'EMPLOYEES_NOT_FOUND',
+                    404
+                );
+            }
+            return employees;
+        } catch (err: any) {
+            throw err;
+        }
+    };
+
     public deleteEmployee = async (employeeId: string): Promise<boolean> => {
         try {
             const employee = await Employee.findById(employeeId);

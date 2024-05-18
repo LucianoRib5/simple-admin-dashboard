@@ -40,6 +40,15 @@ export class EmployeeController {
     };
   };
 
+  public getAllEmployees = async (req: Request, res: Response) => {
+    try {
+      const employees = await this.employeeBusiness.getAllEmployees();
+      res.send(employees);      
+    } catch (err: any) {
+      res.status(err.statusCode).send(err.errorHandler());
+    };
+  };
+
   public deleteEmployee = async (req: Request, res: Response) => {
     try {
       const employeeId: string = req.params.id
