@@ -7,7 +7,8 @@ import {
   Tr,
   Th,
   Td,
-  TableContainer
+  TableContainer,
+  Heading
 } from '@chakra-ui/react'
 import { DeleteIcon, EditIcon, ArrowDownIcon, ArrowUpIcon } from '@chakra-ui/icons'
 import { IconButton } from '@chakra-ui/react'
@@ -90,62 +91,71 @@ const EmployeeTable = ({ employees, setEmployees }: EmployeeTableProps) => {
 
   return (
     <>
-      <TableContainer style={{ maxHeight: '74vh', overflowY: 'auto' }}>
-        <Table variant='striped' colorScheme='teal'>
-          <Thead
-            sx={{
-              position: 'sticky',
-              top: 0,
-              backgroundColor: 'white',
-              zIndex: 1,
-            }}
-          >
-          <Tr>
-            <Th onClick={() => requestSort('name')} className={getColumnClass('name')} width='30%'>
-              Nome {getSortIcon('name')}
-            </Th>
-            <Th onClick={() => requestSort('position')} className={getColumnClass('position')} width='30%'>
-              Cargo {getSortIcon('position')}
-            </Th>
-            <Th onClick={() => requestSort('department')} className={getColumnClass('department')} width='30%'>
-              Departamento {getSortIcon('department')}
-            </Th>
-            <Th width='5%'>Editar</Th>
-            <Th width='5%'>Excluir</Th>
-          </Tr>
-          </Thead>
-          <Tbody>
-            {sortedEmployees.map((employee) => (
-              <Tr key={employee.id}>
-                <Td width='30%'>{employee.name}</Td>
-                <Td width='30%'>{employee.position}</Td>
-                <Td width='30%'>{employee.department}</Td>
-                <Td width='5%'>
-                  <div>
-                    <IconButton
-                      type='button'
-                      colorScheme='blue'
-                      aria-label='edit employee'
-                      icon={<EditIcon />}
-                      onClick={() => router.push(`/employee/edit?employeeId=${employee.id}`)}
-                    />
-                  </div>
-                </Td>
-                <Td width='5%'>
-                  <div>
-                    <IconButton
-                      colorScheme='red'
-                      aria-label='delete employee'
-                      icon={<DeleteIcon />}
-                      onClick={() => openConfirmModalHandler(employee.id, employee.name)}
-                    />
-                  </div>
-                </Td>
+      {
+        employees.length === 0 ? (
+          <Heading as='h6' size='md' textAlign='start' my={2}>
+            Nenhum funcionário cadastrado
+          </Heading>
+        ) : (
+          <TableContainer style={{ maxHeight: '74vh', overflowY: 'auto' }}>
+            <Table variant='striped' colorScheme='teal'>
+              <Thead
+                sx={{
+                  position: 'sticky',
+                  top: 0,
+                  backgroundColor: 'white',
+                  zIndex: 1,
+                }}
+              >
+              <Tr>
+                <Th onClick={() => requestSort('name')} className={getColumnClass('name')} width='30%'>
+                  Nome {getSortIcon('name')}
+                </Th>
+                <Th onClick={() => requestSort('position')} className={getColumnClass('position')} width='30%'>
+                  Cargo {getSortIcon('position')}
+                </Th>
+                <Th onClick={() => requestSort('department')} className={getColumnClass('department')} width='30%'>
+                  Departamento {getSortIcon('department')}
+                </Th>
+                <Th width='5%'>Editar</Th>
+                <Th width='5%'>Excluir</Th>
               </Tr>
-            ))}
-          </Tbody>
-        </Table>
-      </TableContainer>
+              </Thead>
+              <Tbody>
+                {sortedEmployees.map((employee) => (
+                  <Tr key={employee.id}>
+                    <Td width='30%'>{employee.name}</Td>
+                    <Td width='30%'>{employee.position}</Td>
+                    <Td width='30%'>{employee.department}</Td>
+                    <Td width='5%'>
+                      <div>
+                        <IconButton
+                          type='button'
+                          colorScheme='blue'
+                          aria-label='edit employee'
+                          icon={<EditIcon />}
+                          onClick={() => router.push(`/employee/edit?employeeId=${employee.id}`)}
+                        />
+                      </div>
+                    </Td>
+                    <Td width='5%'>
+                      <div>
+                        <IconButton
+                          colorScheme='red'
+                          aria-label='delete employee'
+                          icon={<DeleteIcon />}
+                          onClick={() => openConfirmModalHandler(employee.id, employee.name)}
+                        />
+                      </div>
+                    </Td>
+                  </Tr>
+                ))}
+              </Tbody>
+            </Table>
+          </TableContainer>
+
+        )
+      }
       {employeeIdToDelete && employeeNameToDelete && (
         <ConfirmationModal 
           isOpen={openConfirmationModal} 
