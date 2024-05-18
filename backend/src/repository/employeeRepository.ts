@@ -43,6 +43,31 @@ export class EmployeeRepository {
         }
     };
 
+    
+    public updateEmployee = async (employeeId: string, employeeDto: EmployeeDto): Promise<IEmployee> => {
+        const { name, position, department, hireDate } = employeeDto;
+    
+        const employee = await Employee.findById(employeeId);
+        if (!employee) {
+            throw new CustomError(
+                `Funcionário com id ${employeeId} não encontrado!`,
+                'EMPLOYEE_NOT_FOUND',
+                404
+            );
+        }
+    
+        employee.set({
+            name,
+            position,
+            department,
+            hireDate
+        });
+    
+        await employee.save();
+        return employee;
+    };
+    
+
     public deleteEmployee = async (employeeId: string): Promise<boolean> => {
         try {
             const employee = await Employee.findById(employeeId);

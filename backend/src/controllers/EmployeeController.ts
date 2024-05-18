@@ -49,6 +49,31 @@ export class EmployeeController {
     };
   };
 
+  public updateEmployee = async (req: Request, res: Response) => {
+    try {
+      const { name, position, department, hireDate } = req.body
+      const employeeId: string = req.params.id
+
+      const bodyDto: EmployeeDto = {
+        name,
+        position,
+        department,
+        hireDate: new Date(hireDate)  
+      }
+
+      const errors = await validateBody(EmployeeDto, bodyDto);
+  
+      if (errors.length > 0) {
+        return res.status(400).json({ errors });
+      }
+
+      const updatedEmployee = await this.employeeBusiness.updateEmployee(employeeId, bodyDto);
+      res.send(updatedEmployee);      
+    } catch (err: any) {
+      res.status(err.status || 400).send(err.message);
+    };
+  };
+
   public deleteEmployee = async (req: Request, res: Response) => {
     try {
       const employeeId: string = req.params.id
